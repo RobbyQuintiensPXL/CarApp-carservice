@@ -1,6 +1,5 @@
 package be.carshop.carservice.repository;
 
-import be.carshop.carservice.model.Brand;
 import be.carshop.carservice.model.Model;
 import org.springframework.data.jpa.repository.JpaRepository;
 
