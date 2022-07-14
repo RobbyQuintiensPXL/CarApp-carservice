@@ -41,10 +41,10 @@ public class BrandRepositoryTest {
     @Before
     public void persist() {
         country = new Country();
-        country.setCountry("TestCountry");
+        country.setCountryName("TestCountry");
         entityManager.persist(country);
         brand = new Brand();
-        brand.setBrand("TestBrand");
+        brand.setBrandName("TestBrand");
         brand.setCountry(country);
         brand.setUrl("www.testbrand.com");
         brand.setLogoUrl("logourl.jpg");
@@ -57,22 +57,22 @@ public class BrandRepositoryTest {
         List<BrandDto> brandDtoList = brandRepository.findAll().stream().map(BrandDto::new).collect(Collectors.toList());
 
         assertThat(brandDtoList).isNotEmpty();
-        assertThat(brandDtoList.get(0).getBrand()).isEqualTo(brand.getBrand());
-        assertThat(brandDtoList.get(0).getCountry().getCountry()).isEqualTo(brand.getCountry().getCountry());
+        assertThat(brandDtoList.get(0).getBrand()).isEqualTo(brand.getBrandName());
+        assertThat(brandDtoList.get(0).getCountry().getCountryName()).isEqualTo(brand.getCountry().getCountryName());
     }
 
     @Test
     public void showBrandsByCountryTest() {
-        List<BrandDto> brandDtoList = brandRepository.findAllByCountry_Country(country.getCountry()).stream().map(BrandDto::new).collect(Collectors.toList());
+        List<BrandDto> brandDtoList = brandRepository.findAllByCountry_CountryName(country.getCountryName()).stream().map(BrandDto::new).collect(Collectors.toList());
 
         assertThat(brandDtoList).isNotEmpty();
         assertThat(brandDtoList.get(0).getLogoUrl()).isEqualTo(brand.getLogoUrl());
-        assertThat(brandDtoList.get(0).getCountry().getCountry()).isEqualTo(brand.getCountry().getCountry());
+        assertThat(brandDtoList.get(0).getCountry().getCountryName()).isEqualTo(brand.getCountry().getCountryName());
     }
 
     @Test
     public void showBrandByBrandNameTest() {
-        BrandDto brandDto = brandRepository.findByBrand(brand.getBrand()).map(BrandDto::new).get();
+        BrandDto brandDto = brandRepository.findByBrandName(brand.getBrandName()).map(BrandDto::new).get();
 
         assertThat(brandDto).isNotNull();
         assertThat(brandDto.getUrl()).isEqualTo(brand.getUrl());

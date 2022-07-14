@@ -44,16 +44,16 @@ public class ModelRepositoryTest {
     @Before
     public void persist() {
         country = new Country();
-        country.setCountry("TestCountry");
+        country.setCountryName("TestCountry");
         entityManager.persist(country);
         brand = new Brand();
-        brand.setBrand("TestBrand");
+        brand.setBrandName("TestBrand");
         brand.setCountry(country);
         brand.setUrl("www.testbrand.com");
         brand.setLogoUrl("logourl.jpg");
         entityManager.persist(brand);
         model = new Model();
-        model.setModel("TestModel");
+        model.setModelName("TestModel");
         model.setBrand(brand);
         model.setFuelType(FuelType.DIESEL);
         model.setImageUrl("imageurl.jpg");
@@ -63,33 +63,37 @@ public class ModelRepositoryTest {
 
     @Test
     public void showAllModelsTest() {
-        List<ModelDto> modelDtoList = modelRepository.findAll().stream().map(ModelDto::new).collect(Collectors.toList());
+        List<ModelDto> modelDtoList = modelRepository.findAll().stream().map(ModelDto::new)
+                .collect(Collectors.toList());
 
         assertThat(modelDtoList).isNotEmpty();
-        assertThat(modelDtoList.get(0).getModel()).isEqualTo(model.getModel());
+        assertThat(modelDtoList.get(0).getModel()).isEqualTo(model.getModelName());
         assertThat(modelDtoList.get(0).getImageUrl()).isEqualTo(model.getImageUrl());
         assertThat(modelDtoList.get(0).getFuelType()).isEqualTo(model.getFuelType());
     }
 
     @Test
     public void showModelsByBrandTest() {
-        List<ModelDto> modelDtoList = modelRepository.findAllByBrand(brand).stream().map(ModelDto::new).collect(Collectors.toList());
+        List<ModelDto> modelDtoList = modelRepository.findAllByBrand_BrandName(brand.getBrandName())
+                .stream().map(ModelDto::new).collect(Collectors.toList());
 
         assertThat(modelDtoList).isNotEmpty();
-        assertThat(modelDtoList.get(0).getModel()).isEqualTo(model.getModel());
+        assertThat(modelDtoList.get(0).getModel()).isEqualTo(model.getModelName());
         assertThat(modelDtoList.get(0).getImageUrl()).isEqualTo(model.getImageUrl());
         assertThat(modelDtoList.get(0).getFuelType()).isEqualTo(model.getFuelType());
-        assertThat(modelDtoList.get(0).getBrand().getLogoUrl()).isEqualTo(model.getBrand().getLogoUrl());
+        assertThat(modelDtoList.get(0).getBrand().getLogoUrl())
+                .isEqualTo(model.getBrand().getLogoUrl());
     }
 
     @Test
     public void showModelByModelName() {
-        Model optionalModel = modelRepository.findByModel(model.getModel()).get();
+        Model optionalModel = modelRepository.findByModelName(model.getModelName()).get();
 
         assertThat(optionalModel).isNotNull();
-        assertThat(optionalModel.getBrand().getBrand()).isEqualTo(model.getBrand().getBrand());
+        assertThat(optionalModel.getBrand().getBrandName())
+                .isEqualTo(model.getBrand().getBrandName());
         assertThat(optionalModel.getBrand().getUrl()).isEqualTo(model.getBrand().getUrl());
-        assertThat(optionalModel.getBrand().getCountry().getCountry())
-                .isEqualTo(model.getBrand().getCountry().getCountry());
+        assertThat(optionalModel.getBrand().getCountry().getCountryName())
+                .isEqualTo(model.getBrand().getCountry().getCountryName());
     }
 }

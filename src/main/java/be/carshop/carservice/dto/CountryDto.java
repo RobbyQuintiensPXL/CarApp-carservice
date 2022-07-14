@@ -9,7 +9,7 @@ public class CountryDto {
 
     public CountryDto(Country country) {
         this.id = country.getId();
-        this.country = country.getCountry();
+        this.country = country.getCountryName();
     }
 
     public Long getId() {

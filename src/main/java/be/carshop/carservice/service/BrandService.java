@@ -29,7 +29,7 @@ public class BrandService {
     }
 
     public List<BrandDto> getAllBrandsByCountry(String country) {
-        List<BrandDto> brandDtoList = brandRepository.findAllByCountry_Country(country).stream().map(BrandDto::new)
+        List<BrandDto> brandDtoList = brandRepository.findAllByCountry_CountryName(country).stream().map(BrandDto::new)
                 .collect(Collectors.toList());
 
         if (brandDtoList.isEmpty()) {
@@ -40,7 +40,7 @@ public class BrandService {
     }
 
     public BrandDto getBrandByBrandName(String brand) {
-        return brandRepository.findByBrand(brand).map(BrandDto::new)
+        return brandRepository.findByBrandName(brand).map(BrandDto::new)
                 .orElseThrow(() -> new BusinessException("No brand found"));
     }
 }

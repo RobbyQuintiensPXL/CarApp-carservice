@@ -17,7 +17,8 @@ public class Model {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String model;
+    @Column(name = "MODEL_NAME")
+    private String modelName;
 
     @ManyToOne
     private Brand brand;
@@ -30,8 +31,8 @@ public class Model {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Model model = (Model) o;
-        return id != null && Objects.equals(id, model.id);
+        Model modelEquals = (Model) o;
+        return id != null && Objects.equals(id, modelEquals.id);
     }
 
     @Override

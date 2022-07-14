@@ -39,24 +39,26 @@ public class CountryRepositoryTest {
     @Before
     public void persist() {
         country = new Country();
-        country.setCountry("TestCountry");
+        country.setCountryName("TestCountry");
         entityManager.persist(country);
         entityManager.flush();
     }
 
     @Test
     public void showAllCountriesTest() {
-        List<CountryDto> countryDtoList = countryRepository.findAll().stream().map(CountryDto::new).collect(Collectors.toList());
+        List<CountryDto> countryDtoList = countryRepository.findAll().stream()
+                .map(CountryDto::new).collect(Collectors.toList());
 
         assertThat(countryDtoList).isNotEmpty();
-        assertThat(countryDtoList.get(0).getCountry()).isEqualTo(country.getCountry());
+        assertThat(countryDtoList.get(0).getCountry()).isEqualTo(country.getCountryName());
     }
 
     @Test
     public void showCountryByIdTest() {
-        CountryDto countryDto = countryRepository.findById(country.getId()).map(CountryDto::new).get();
+        CountryDto countryDto = countryRepository.findById(country.getId())
+                .map(CountryDto::new).get();
 
         assertThat(countryDto).isNotNull();
-        assertThat(countryDto.getCountry()).isEqualTo(country.getCountry());
+        assertThat(countryDto.getCountry()).isEqualTo(country.getCountryName());
     }
 }

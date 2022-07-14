@@ -1,10 +1,9 @@
 package be.carshop.carservice.service;
+
 import be.carshop.carservice.dto.BrandDto;
-import be.carshop.carservice.dto.CountryDto;
 import be.carshop.carservice.model.Brand;
 import be.carshop.carservice.model.Country;
 import be.carshop.carservice.repository.BrandRepository;
-import be.carshop.carservice.repository.CountryRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,9 +17,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -40,9 +38,9 @@ public class BrandServiceTest {
     @Before
     public void init() {
         country = new Country();
-        country.setCountry("TestCountry");
+        country.setCountryName("TestCountry");
         brand = new Brand();
-        brand.setBrand("TestBrand");
+        brand.setBrandName("TestBrand");
         brand.setUrl("TestUrl");
         brand.setLogoUrl("TestLogoUrl");
         brand.setCountry(country);
@@ -56,32 +54,37 @@ public class BrandServiceTest {
 
         List<BrandDto> brandDtoList = brandService.getAllBrands();
 
-        assertEquals(brandDtoList.get(0).getCountry().getCountry(), brand.getCountry().getCountry());
-        assertEquals(brandDtoList.get(0).getBrand(), brand.getBrand());
+        assertEquals(brandDtoList.get(0).getCountry().getCountryName(),
+                brand.getCountry().getCountryName());
+        assertEquals(brandDtoList.get(0).getBrand(), brand.getBrandName());
         assertEquals(brandDtoList.get(0).getLogoUrl(), brand.getLogoUrl());
         assertEquals(brandDtoList.get(0).getUrl(), brand.getUrl());
     }
 
     @Test
     public void showAllBrandsByCountryTest() {
-        when(brandRepository.findAllByCountry_Country(country.getCountry())).thenReturn(brandList);
+        when(brandRepository.findAllByCountry_CountryName(country.getCountryName()))
+                .thenReturn(brandList);
 
-        List<BrandDto> brandDtoList = brandService.getAllBrandsByCountry(country.getCountry());
+        List<BrandDto> brandDtoList = brandService.getAllBrandsByCountry(country.getCountryName());
 
-        assertEquals(brandDtoList.get(0).getCountry().getCountry(), brand.getCountry().getCountry());
-        assertEquals(brandDtoList.get(0).getBrand(), brand.getBrand());
+        assertEquals(brandDtoList.get(0).getCountry().getCountryName(),
+                brand.getCountry().getCountryName());
+        assertEquals(brandDtoList.get(0).getBrand(), brand.getBrandName());
         assertEquals(brandDtoList.get(0).getLogoUrl(), brand.getLogoUrl());
         assertEquals(brandDtoList.get(0).getUrl(), brand.getUrl());
     }
 
     @Test
     public void showBrandByBrandNameTest() {
-        when(brandRepository.findByBrand(brand.getBrand())).thenReturn(Optional.ofNullable(brand));
+        when(brandRepository.findByBrandName(brand.getBrandName()))
+                .thenReturn(Optional.ofNullable(brand));
 
-        BrandDto brandDto = brandService.getBrandByBrandName(brand.getBrand());
+        BrandDto brandDto = brandService.getBrandByBrandName(brand.getBrandName());
 
-        assertEquals(brandDto.getCountry().getCountry(), brand.getCountry().getCountry());
-        assertEquals(brandDto.getBrand(), brand.getBrand());
+        assertEquals(brandDto.getCountry().getCountryName(),
+                brand.getCountry().getCountryName());
+        assertEquals(brandDto.getBrand(), brand.getBrandName());
         assertEquals(brandDto.getLogoUrl(), brand.getLogoUrl());
         assertEquals(brandDto.getUrl(), brand.getUrl());
     }

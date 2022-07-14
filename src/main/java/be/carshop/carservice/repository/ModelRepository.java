@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ModelRepository extends JpaRepository<Model, Long> {
 
-    List<Model> findAllByBrand(Brand brand);
+    List<Model> findAllByBrand_BrandName(String brand);
 
-    Optional<Model> findByModel(String model);
+    Optional<Model> findByModelName(String model);
 }

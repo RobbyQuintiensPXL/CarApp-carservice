@@ -14,7 +14,7 @@ public class ModelDto {
 
     public ModelDto(Model model) {
         this.id = model.getId();
-        this.model = model.getModel();
+        this.model = model.getModelName();
         this.brand = model.getBrand();
         this.fuelType = model.getFuelType();
         this.imageUrl = model.getImageUrl();

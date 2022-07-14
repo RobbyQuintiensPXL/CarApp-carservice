@@ -13,7 +13,7 @@ public class BrandDto {
 
     public BrandDto(Brand brand) {
         this.id = brand.getId();
-        this.brand = brand.getBrand();
+        this.brand = brand.getBrandName();
         this.country = brand.getCountry();
         this.url = brand.getUrl();
         this.logoUrl = brand.getLogoUrl();

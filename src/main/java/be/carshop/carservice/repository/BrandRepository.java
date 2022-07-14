@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface BrandRepository extends JpaRepository<Brand, Long> {
 
-    Optional<Brand> findByBrand(String brand);
+    Optional<Brand> findByBrandName(String brand);
 
-    List<Brand> findAllByCountry_Country(String country);
+    List<Brand> findAllByCountry_CountryName(String country);
 }

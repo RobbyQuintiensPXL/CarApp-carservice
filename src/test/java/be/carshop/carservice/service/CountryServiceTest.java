@@ -37,7 +37,7 @@ public class CountryServiceTest {
     @Before
     public void init() {
         country = new Country();
-        country.setCountry("TestCountry");
+        country.setCountryName("TestCountry");
         countryList = new LinkedList<>();
         countryList.add(country);
     }
@@ -48,8 +48,8 @@ public class CountryServiceTest {
 
         List<CountryDto> countryDtoList = countryService.getAllCountries();
 
-        assertEquals(countryDtoList.size(), 1);
-        assertEquals(countryDtoList.get(0).getCountry(), country.getCountry());
+        assertEquals(1, countryDtoList.size());
+        assertEquals(countryDtoList.get(0).getCountry(), country.getCountryName());
     }
 
     @Test
@@ -58,17 +58,18 @@ public class CountryServiceTest {
 
         CountryDto countryDto = countryService.getCountryById(country.getId());
 
-        assertEquals(countryDto.getCountry(), country.getCountry());
+        assertEquals(countryDto.getCountry(), country.getCountryName());
         assertEquals(countryDto.getId(), country.getId());
     }
 
     @Test
     public void showCountryByCountryName() {
-        when(countryRepository.findByCountry(country.getCountry())).thenReturn(Optional.ofNullable(country));
+        when(countryRepository.findByCountryName(country.getCountryName()))
+                .thenReturn(Optional.ofNullable(country));
 
-        CountryDto countryDto = countryService.getCountryByCountryName(country.getCountry());
+        CountryDto countryDto = countryService.getCountryByCountryName(country.getCountryName());
 
-        assertEquals(countryDto.getCountry(), country.getCountry());
+        assertEquals(countryDto.getCountry(), country.getCountryName());
         assertEquals(countryDto.getId(), country.getId());
     }
 }
