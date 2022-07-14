@@ -63,7 +63,7 @@ public class BrandRepositoryTest {
 
     @Test
     public void showBrandsByCountryTest() {
-        List<BrandDto> brandDtoList = brandRepository.findAllByCountry(country).stream().map(BrandDto::new).collect(Collectors.toList());
+        List<BrandDto> brandDtoList = brandRepository.findAllByCountry_Country(country.getCountry()).stream().map(BrandDto::new).collect(Collectors.toList());
 
         assertThat(brandDtoList).isNotEmpty();
         assertThat(brandDtoList.get(0).getLogoUrl()).isEqualTo(brand.getLogoUrl());

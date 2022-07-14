@@ -11,5 +11,5 @@ public interface BrandRepository extends JpaRepository<Brand, Long> {
 
     Optional<Brand> findByBrand(String brand);
 
-    List<Brand> findAllByCountry(Country country);
+    List<Brand> findAllByCountry_Country(String country);
 }

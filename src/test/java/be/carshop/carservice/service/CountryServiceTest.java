@@ -48,7 +48,7 @@ public class CountryServiceTest {
 
         List<CountryDto> countryDtoList = countryService.getAllCountries();
 
-        assertThat(countryDtoList.size()).isNotNull();
+        assertEquals(countryDtoList.size(), 1);
         assertEquals(countryDtoList.get(0).getCountry(), country.getCountry());
     }
 
@@ -58,7 +58,6 @@ public class CountryServiceTest {
 
         CountryDto countryDto = countryService.getCountryById(country.getId());
 
-        assertThat(countryDto).isNotNull();
         assertEquals(countryDto.getCountry(), country.getCountry());
         assertEquals(countryDto.getId(), country.getId());
     }
@@ -69,7 +68,6 @@ public class CountryServiceTest {
 
         CountryDto countryDto = countryService.getCountryByCountryName(country.getCountry());
 
-        assertThat(countryDto).isNotNull();
         assertEquals(countryDto.getCountry(), country.getCountry());
         assertEquals(countryDto.getId(), country.getId());
     }
