@@ -3,6 +3,7 @@ package be.carshop.carservice.repository;
 import be.carshop.carservice.dto.BrandDto;
 import be.carshop.carservice.model.Brand;
 import be.carshop.carservice.model.Country;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class BrandRepositoryTest {
     private Brand brand;
     private Country country;
 
+    @Before
     public void persist() {
         country = new Country();
         country.setCountry("TestCountry");
@@ -52,8 +54,6 @@ public class BrandRepositoryTest {
 
     @Test
     public void showAllBrandsTest() {
-        persist();
-
         List<BrandDto> brandDtoList = brandRepository.findAll().stream().map(BrandDto::new).collect(Collectors.toList());
 
         assertThat(brandDtoList).isNotEmpty();
@@ -63,8 +63,6 @@ public class BrandRepositoryTest {
 
     @Test
     public void showBrandsByCountryTest() {
-        persist();
-
         List<BrandDto> brandDtoList = brandRepository.findAllByCountry(country).stream().map(BrandDto::new).collect(Collectors.toList());
 
         assertThat(brandDtoList).isNotEmpty();
@@ -74,8 +72,6 @@ public class BrandRepositoryTest {
 
     @Test
     public void showBrandByBrandNameTest() {
-        persist();
-
         BrandDto brandDto = brandRepository.findByBrand(brand.getBrand()).map(BrandDto::new).get();
 
         assertThat(brandDto).isNotNull();

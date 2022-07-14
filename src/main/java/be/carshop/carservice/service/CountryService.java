@@ -31,4 +31,8 @@ public class CountryService {
     public CountryDto getCountryById(Long id) {
         return countryRepository.findById(id).map(CountryDto::new).orElseThrow(() -> new BusinessException("No country found"));
     }
+
+    public CountryDto getCountryByCountryName(String country) {
+        return countryRepository.findByCountry(country).map(CountryDto::new).orElseThrow(() -> new BusinessException("No country found"));
+    }
 }
