@@ -6,8 +6,8 @@ import java.util.Map;
 
 public enum FuelType {
 
-    PETROL("petrol"), DIESEL("diesel"), HYBRIDE("hybride"),
-    ELECTRIC("Electric");
+    PETROL("petrol"), DIESEL("diesel"), HYBRIDE_BENZINE("hybride-benzine"),
+    HYBRIDE_DIESEL("hybride-diesel"), ELECTRIC("Electric");
 
     private static final Map<String, FuelType> nameToValueMap =
             new HashMap<>();
@@ -31,5 +31,4 @@ public enum FuelType {
     public String getFuel() {
         return fuel;
     }
-
 }

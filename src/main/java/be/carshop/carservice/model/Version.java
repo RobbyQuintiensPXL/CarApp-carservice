@@ -1,6 +1,9 @@
 package be.carshop.carservice.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -11,26 +14,30 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Model {
+public class Version {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "MODEL_NAME")
-    private String modelName;
-
     @ManyToOne
-    private Brand brand;
+    private Model model;
 
-    private FuelType fuelType;
+    @Column(name = "VERSION_NAME")
+    private String versionName;
+
+    private int cylinder;
+
+    private int co2;
+
+    private Emission emission;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Model modelEquals = (Model) o;
-        return id != null && Objects.equals(id, modelEquals.id);
+        Version versionEquals = (Version) o;
+        return id != null && Objects.equals(id, versionEquals.id);
     }
 
     @Override

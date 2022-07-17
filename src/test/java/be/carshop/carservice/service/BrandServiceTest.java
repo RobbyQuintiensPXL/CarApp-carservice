@@ -1,12 +1,14 @@
 package be.carshop.carservice.service;
 
 import be.carshop.carservice.dto.BrandDto;
+import be.carshop.carservice.exception.BusinessException;
 import be.carshop.carservice.model.Brand;
 import be.carshop.carservice.model.Country;
 import be.carshop.carservice.repository.BrandRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -87,5 +90,29 @@ public class BrandServiceTest {
         assertEquals(brandDto.getBrand(), brand.getBrandName());
         assertEquals(brandDto.getLogoUrl(), brand.getLogoUrl());
         assertEquals(brandDto.getUrl(), brand.getUrl());
+    }
+
+    @Test(expected = BusinessException.class)
+    public void throwExceptionNoBrandsFound() {
+        BrandService brandSpy = Mockito.spy(brandService);
+        when(brandSpy.getAllBrands()).thenThrow(BusinessException.class);
+
+        brandSpy.getAllBrands();
+    }
+
+    @Test(expected = BusinessException.class)
+    public void throwExceptionNoBrandsByCountryFound() {
+        BrandService brandSpy = Mockito.spy(brandService);
+        when(brandSpy.getAllBrandsByCountry(anyString())).thenThrow(BusinessException.class);
+
+        brandSpy.getAllBrandsByCountry("Country");
+    }
+
+    @Test(expected = BusinessException.class)
+    public void throwExceptionNoBrandByNameFound() {
+        BrandService brandSpy = Mockito.spy(brandService);
+        when(brandSpy.getBrandByBrandName(anyString())).thenThrow(BusinessException.class);
+
+        brandSpy.getBrandByBrandName("Brand");
     }
 }

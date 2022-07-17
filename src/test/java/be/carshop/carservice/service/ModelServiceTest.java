@@ -1,15 +1,16 @@
 package be.carshop.carservice.service;
-import be.carshop.carservice.dto.BrandDto;
+
 import be.carshop.carservice.dto.ModelDto;
+import be.carshop.carservice.exception.BusinessException;
 import be.carshop.carservice.model.Brand;
 import be.carshop.carservice.model.Country;
 import be.carshop.carservice.model.FuelType;
 import be.carshop.carservice.model.Model;
-import be.carshop.carservice.repository.BrandRepository;
 import be.carshop.carservice.repository.ModelRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -18,8 +19,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -49,9 +52,7 @@ public class ModelServiceTest {
         brand.setCountry(country);
         model = new Model();
         model.setModelName("TestModel");
-        model.setImageUrl("imageUrl");
         model.setFuelType(FuelType.DIESEL);
-        model.setBrand(brand);
         model.setBrand(brand);
         modelList = new LinkedList<>();
         modelList.add(model);
@@ -65,7 +66,6 @@ public class ModelServiceTest {
 
         assertEquals(modelDtoList.get(0).getModel(), model.getModelName());
         assertEquals(modelDtoList.get(0).getFuelType(), model.getFuelType());
-        assertEquals(modelDtoList.get(0).getImageUrl(), model.getImageUrl());
         assertEquals(modelDtoList.get(0).getBrand().getBrandName(),
                 model.getBrand().getBrandName());
     }
@@ -79,7 +79,42 @@ public class ModelServiceTest {
 
         assertEquals(modelDtoList.get(0).getModel(), model.getModelName());
         assertEquals(modelDtoList.get(0).getFuelType(), model.getFuelType());
-        assertEquals(modelDtoList.get(0).getImageUrl(), model.getImageUrl());
         assertEquals(modelDtoList.get(0).getBrand().getBrandName(), model.getBrand().getBrandName());
+    }
+
+    @Test
+    public void showModelByModelName() {
+        when(modelRepository.findByModelName(model.getModelName()))
+                .thenReturn(Optional.ofNullable(model));
+
+        ModelDto modelDto = modelService.getModelByModelName(model.getModelName());
+
+        assertEquals(modelDto.getBrand().getBrandName(),
+                model.getBrand().getBrandName());
+        assertEquals(modelDto.getModel(), model.getModelName());
+    }
+
+    @Test(expected = BusinessException.class)
+    public void throwExceptionNoModelsFound() {
+        ModelService modelSpy = Mockito.spy(modelService);
+        when(modelSpy.getAllModels()).thenThrow(BusinessException.class);
+
+        modelSpy.getAllModels();
+    }
+
+    @Test(expected = BusinessException.class)
+    public void throwExceptionNoModelsByBrandFound() {
+        ModelService modelSpy = Mockito.spy(modelService);
+        when(modelSpy.getAllModelsByBrand(anyString())).thenThrow(BusinessException.class);
+
+        modelSpy.getAllModelsByBrand("Brand");
+    }
+
+    @Test(expected = BusinessException.class)
+    public void throwExceptionNoModelByNameFound() {
+        ModelService modelSpy = Mockito.spy(modelService);
+        when(modelSpy.getModelByModelName(anyString())).thenThrow(BusinessException.class);
+
+        modelSpy.getModelByModelName("Model");
     }
 }

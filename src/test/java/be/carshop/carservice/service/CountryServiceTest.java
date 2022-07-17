@@ -1,11 +1,14 @@
 package be.carshop.carservice.service;
 
 import be.carshop.carservice.dto.CountryDto;
+import be.carshop.carservice.exception.BusinessException;
 import be.carshop.carservice.model.Country;
 import be.carshop.carservice.repository.CountryRepository;
+import com.querydsl.core.types.Predicate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -71,5 +74,29 @@ public class CountryServiceTest {
 
         assertEquals(countryDto.getCountry(), country.getCountryName());
         assertEquals(countryDto.getId(), country.getId());
+    }
+
+    @Test(expected=BusinessException.class)
+    public void throwExceptionNoCountriesFound() {
+        CountryService countrySpy = Mockito.spy(countryService);
+        when(countrySpy.getAllCountries()).thenThrow(BusinessException.class);
+
+        countrySpy.getAllCountries();
+    }
+
+    @Test(expected=BusinessException.class)
+    public void throwExceptionNoCountryByIdFound() {
+        CountryService countrySpy = Mockito.spy(countryService);
+        when(countrySpy.getCountryById(anyLong())).thenThrow(BusinessException.class);
+
+        countrySpy.getCountryById(1L);
+    }
+
+    @Test(expected=BusinessException.class)
+    public void throwExceptionNoCountryByNameFound() {
+        CountryService countrySpy = Mockito.spy(countryService);
+        when(countrySpy.getCountryByCountryName(anyString())).thenThrow(BusinessException.class);
+
+        countrySpy.getCountryByCountryName("Country");
     }
 }
