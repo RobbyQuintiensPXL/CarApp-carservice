@@ -55,7 +55,6 @@ public class ModelRepositoryTest {
         model = new Model();
         model.setModelName("TestModel");
         model.setBrand(brand);
-        model.setFuelType(FuelType.DIESEL);
         entityManager.persist(model);
         entityManager.flush();
     }
@@ -67,7 +66,6 @@ public class ModelRepositoryTest {
 
         assertThat(modelDtoList).isNotEmpty();
         assertThat(modelDtoList.get(0).getModel()).isEqualTo(model.getModelName());
-        assertThat(modelDtoList.get(0).getFuelType()).isEqualTo(model.getFuelType());
     }
 
     @Test
@@ -77,9 +75,6 @@ public class ModelRepositoryTest {
 
         assertThat(modelDtoList).isNotEmpty();
         assertThat(modelDtoList.get(0).getModel()).isEqualTo(model.getModelName());
-        assertThat(modelDtoList.get(0).getFuelType()).isEqualTo(model.getFuelType());
-        assertThat(modelDtoList.get(0).getBrand().getLogoUrl())
-                .isEqualTo(model.getBrand().getLogoUrl());
     }
 
     @Test

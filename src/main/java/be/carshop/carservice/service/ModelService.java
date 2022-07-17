@@ -43,4 +43,9 @@ public class ModelService {
         return modelRepository.findByModelName(model).map(ModelDto::new)
                 .orElseThrow(() -> new BusinessException("No model found"));
     }
+
+    public ModelDto getModelById(Long id) {
+        return modelRepository.findById(id).map(ModelDto::new)
+                .orElseThrow(() -> new BusinessException("No model found"));
+    }
 }

@@ -53,7 +53,6 @@ public class VersionRepositoryTest {
         model = new Model();
         model.setModelName("TestModel");
         model.setBrand(brand);
-        model.setFuelType(FuelType.DIESEL);
         entityManager.persist(model);
         version = new Version();
         version.setModel(model);
@@ -61,6 +60,7 @@ public class VersionRepositoryTest {
         version.setCo2(100);
         version.setEmission(Emission.EURO_6);
         version.setVersionName("modelVersion");
+        version.setFuelType(FuelType.DIESEL);
         entityManager.persist(version);
         entityManager.flush();
     }
@@ -71,7 +71,7 @@ public class VersionRepositoryTest {
                 .collect(Collectors.toList());
 
         assertThat(versionDtoList).isNotEmpty();
-        assertThat(versionDtoList.get(0).getModel().getModelName()).isEqualTo(version.getModel().getModelName());
+        assertThat(versionDtoList.get(0).getModel().getModel()).isEqualTo(version.getModel().getModelName());
     }
 
     @Test
@@ -91,7 +91,7 @@ public class VersionRepositoryTest {
                 .map(VersionDto::new).get();
 
         assertThat(versionDto.getVersionName()).isEqualTo(version.getVersionName());
-        assertThat(versionDto.getModel().getBrand().getBrandName())
+        assertThat(versionDto.getModel().getBrand())
                 .isEqualTo(version.getModel().getBrand().getBrandName());
     }
 
@@ -101,7 +101,7 @@ public class VersionRepositoryTest {
                 .map(VersionDto::new).get();
 
         assertThat(versionDto.getVersionName()).isEqualTo(version.getVersionName());
-        assertThat(versionDto.getModel().getBrand().getBrandName())
+        assertThat(versionDto.getModel().getBrand())
                 .isEqualTo(version.getModel().getBrand().getBrandName());
     }
 }

@@ -1,12 +1,10 @@
 package be.carshop.carservice.model;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -14,34 +12,42 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Version {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
+    private Brand brand;
+
+    @ManyToOne
     private Model model;
 
-    @Column(name = "VERSION_NAME")
-    private String versionName;
+    @ManyToOne
+    private Version version;
 
-    private int cylinder;
+    private int numberDoors;
 
-    private int co2;
+    private Transmission transmission;
 
-    private Emission emission;
+    private double price;
 
-    private FuelType fuelType;
+    private LocalDate firstRegistration;
 
-    private int hp;
+    private int numberKm;
+
+    //uitrusting
+    //carrosserie
+    //aantal deuren
+    //kleur
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Version versionEquals = (Version) o;
-        return id != null && Objects.equals(id, versionEquals.id);
+        Product productEquals = (Product) o;
+        return id != null && Objects.equals(id, productEquals.id);
     }
 
     @Override

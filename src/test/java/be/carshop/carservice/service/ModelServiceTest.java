@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -52,7 +53,6 @@ public class ModelServiceTest {
         brand.setCountry(country);
         model = new Model();
         model.setModelName("TestModel");
-        model.setFuelType(FuelType.DIESEL);
         model.setBrand(brand);
         modelList = new LinkedList<>();
         modelList.add(model);
@@ -65,8 +65,7 @@ public class ModelServiceTest {
         List<ModelDto> modelDtoList = modelService.getAllModels();
 
         assertEquals(modelDtoList.get(0).getModel(), model.getModelName());
-        assertEquals(modelDtoList.get(0).getFuelType(), model.getFuelType());
-        assertEquals(modelDtoList.get(0).getBrand().getBrandName(),
+        assertEquals(modelDtoList.get(0).getBrand(),
                 model.getBrand().getBrandName());
     }
 
@@ -78,8 +77,7 @@ public class ModelServiceTest {
         List<ModelDto> modelDtoList = modelService.getAllModelsByBrand(brand.getBrandName());
 
         assertEquals(modelDtoList.get(0).getModel(), model.getModelName());
-        assertEquals(modelDtoList.get(0).getFuelType(), model.getFuelType());
-        assertEquals(modelDtoList.get(0).getBrand().getBrandName(), model.getBrand().getBrandName());
+        assertEquals(modelDtoList.get(0).getBrand(), model.getBrand().getBrandName());
     }
 
     @Test
@@ -89,7 +87,19 @@ public class ModelServiceTest {
 
         ModelDto modelDto = modelService.getModelByModelName(model.getModelName());
 
-        assertEquals(modelDto.getBrand().getBrandName(),
+        assertEquals(modelDto.getBrand(),
+                model.getBrand().getBrandName());
+        assertEquals(modelDto.getModel(), model.getModelName());
+    }
+
+    @Test
+    public void showModelById() {
+        when(modelRepository.findById(model.getId()))
+                .thenReturn(Optional.ofNullable(model));
+
+        ModelDto modelDto = modelService.getModelById(model.getId());
+
+        assertEquals(modelDto.getBrand(),
                 model.getBrand().getBrandName());
         assertEquals(modelDto.getModel(), model.getModelName());
     }
@@ -116,5 +126,13 @@ public class ModelServiceTest {
         when(modelSpy.getModelByModelName(anyString())).thenThrow(BusinessException.class);
 
         modelSpy.getModelByModelName("Model");
+    }
+
+    @Test(expected = BusinessException.class)
+    public void throwExceptionNoModelByIdFound() {
+        ModelService modelSpy = Mockito.spy(modelService);
+        when(modelSpy.getModelById(anyLong())).thenThrow(BusinessException.class);
+
+        modelSpy.getModelById(1L);
     }
 }

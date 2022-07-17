@@ -23,8 +23,6 @@ public class Model {
     @ManyToOne
     private Brand brand;
 
-    private FuelType fuelType;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

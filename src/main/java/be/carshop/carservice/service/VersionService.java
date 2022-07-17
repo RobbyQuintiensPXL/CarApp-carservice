@@ -44,4 +44,9 @@ public class VersionService {
         return versionRepository.findByVersionName(version).map(VersionDto::new)
                 .orElseThrow(() -> new BusinessException("No version found"));
     }
+
+    public VersionDto getVersionById(Long id) {
+        return versionRepository.findById(id).map(VersionDto::new)
+                .orElseThrow(() -> new BusinessException("No version found"));
+    }
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 
 public enum FuelType {
 
-    PETROL("petrol"), DIESEL("diesel"), HYBRIDE_BENZINE("hybride-benzine"),
+    BENZINE("benzine"), DIESEL("diesel"), HYBRIDE_BENZINE("hybride-benzine"),
     HYBRIDE_DIESEL("hybride-diesel"), ELECTRIC("Electric");
 
     private static final Map<String, FuelType> nameToValueMap =
