@@ -3,7 +3,6 @@ package be.carshop.carservice.repository;
 import be.carshop.carservice.dto.ModelDto;
 import be.carshop.carservice.model.Brand;
 import be.carshop.carservice.model.Country;
-import be.carshop.carservice.model.FuelType;
 import be.carshop.carservice.model.Model;
 import org.junit.Before;
 import org.junit.Test;

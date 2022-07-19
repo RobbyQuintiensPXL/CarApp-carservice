@@ -27,14 +27,17 @@ public class Product {
     @ManyToOne
     private Version version;
 
+    @Column(name = "NUMBER_DOORS")
     private int numberDoors;
 
     private Transmission transmission;
 
     private double price;
 
+    @Column(name = "FIRST_REGISTRATION")
     private LocalDate firstRegistration;
 
+    @Column(name = "NUMBER_KM")
     private int numberKm;
 
     //uitrusting
