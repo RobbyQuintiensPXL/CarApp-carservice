@@ -85,8 +85,6 @@ public class ProductServiceTest {
     public void showAllProductsTest() {
         Page<Product> products= new PageImpl<>(productList);
         Pageable paging = PageRequest.of(1, 5);
-//        BooleanBuilder builder = new BooleanBuilder();
-//        predicate = QProduct.product.numberDoors.eq(product.getNumberDoors());
         when(productRepository.findAll(any(Pageable.class))).thenReturn(products);
 
         Page<ProductDto> productDtoList = productService.getAllProducts(paging.getPageSize(), paging.getPageNumber());
