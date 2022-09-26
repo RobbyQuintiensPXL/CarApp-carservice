@@ -13,4 +13,6 @@ public interface ModelRepository extends JpaRepository<Model, Long> {
     List<Model> findAllByBrand_BrandName(String brand);
 
     Optional<Model> findByModelName(String model);
+
+    Optional<Model> findByModelNameAndBrand_BrandName(String model, String brand);
 }

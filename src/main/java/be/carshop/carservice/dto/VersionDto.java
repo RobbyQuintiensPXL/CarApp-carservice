@@ -17,6 +17,7 @@ public class VersionDto {
     private final Emission emission;
     private final FuelType fuelType;
     private final int hp;
+    private final String label;
 
     public VersionDto(Version version) {
         this.id = version.getId();
@@ -27,6 +28,7 @@ public class VersionDto {
         this.emission = version.getEmission();
         this.fuelType = version.getFuelType();
         this.hp = version.getHp();
+        this.label = version.getLabel();
     }
 
     private ModelDto getModelDto(Model model) {

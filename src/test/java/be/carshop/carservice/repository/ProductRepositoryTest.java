@@ -1,6 +1,5 @@
 package be.carshop.carservice.repository;
 
-import be.carshop.carservice.dto.ModelDto;
 import be.carshop.carservice.dto.ProductDto;
 import be.carshop.carservice.model.*;
 import com.querydsl.core.BooleanBuilder;
@@ -9,16 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.cloud.autoconfigure.RefreshAutoConfiguration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -29,25 +24,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@Testcontainers
 @ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ImportAutoConfiguration(RefreshAutoConfiguration.class)
 public class ProductRepositoryTest {
 
+    Predicate predicate;
     @Autowired
     private EntityManager entityManager;
-
     @Autowired
     private ProductRepository productRepository;
-
     private Product product;
     private Version version;
     private Model model;
     private Brand brand;
     private Country country;
-
-    Predicate predicate;
 
     @Before
     public void persist() {

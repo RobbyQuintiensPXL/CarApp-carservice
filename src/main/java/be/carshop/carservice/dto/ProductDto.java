@@ -3,8 +3,8 @@ package be.carshop.carservice.dto;
 import be.carshop.carservice.model.*;
 import lombok.Getter;
 
-import javax.persistence.ManyToOne;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 public class ProductDto {
@@ -18,6 +18,8 @@ public class ProductDto {
     private final double price;
     private final LocalDate firstRegistration;
     private final int numberKm;
+    private final String performance;
+    private final List<String> images;
 
     public ProductDto(Product product) {
         this.id = product.getId();
@@ -29,6 +31,8 @@ public class ProductDto {
         this.price = product.getPrice();
         this.firstRegistration = product.getFirstRegistration();
         this.numberKm = product.getNumberKm();
+        this.performance = product.getPerformance();
+        this.images = product.getImages();
     }
 
     private BrandDto getBrandDto(Brand brand) {

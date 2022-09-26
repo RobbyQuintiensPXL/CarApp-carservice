@@ -3,3 +3,5 @@ spring:
     name: car-service
   profiles:
     active: dev
+
+upload-path: /Users/robby/Desktop/Projects/CarShop/backend/imageServer/upload

@@ -1,6 +1,7 @@
 package be.carshop.carservice.dto;
 
 import be.carshop.carservice.model.Country;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter

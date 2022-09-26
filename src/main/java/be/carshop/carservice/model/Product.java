@@ -5,6 +5,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -40,9 +41,13 @@ public class Product {
     @Column(name = "NUMBER_KM")
     private int numberKm;
 
+    private String performance;
+
+    @ElementCollection
+    private List<String> images;
+
     //uitrusting
     //carrosserie
-    //aantal deuren
     //kleur
 
     @Override
