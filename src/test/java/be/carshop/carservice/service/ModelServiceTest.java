@@ -71,10 +71,10 @@ public class ModelServiceTest {
 
     @Test
     public void showAllModelsByBrandTest() {
-        when(modelRepository.findAllByBrand_BrandName(brand.getBrandName()))
+        when(modelRepository.findAllByBrand_Id(brand.getId()))
                 .thenReturn(modelList);
 
-        List<ModelDto> modelDtoList = modelService.getAllModelsByBrand(brand.getBrandName());
+        List<ModelDto> modelDtoList = modelService.getAllModelsByBrand(brand.getId());
 
         assertEquals(modelDtoList.get(0).getModel(), model.getModelName());
         assertEquals(modelDtoList.get(0).getBrand(), model.getBrand().getBrandName());
@@ -115,9 +115,9 @@ public class ModelServiceTest {
     @Test(expected = BusinessException.class)
     public void throwExceptionNoModelsByBrandFound() {
         ModelService modelSpy = Mockito.spy(modelService);
-        when(modelSpy.getAllModelsByBrand(anyString())).thenThrow(BusinessException.class);
+        when(modelSpy.getAllModelsByBrand(anyLong())).thenThrow(BusinessException.class);
 
-        modelSpy.getAllModelsByBrand("Brand");
+        modelSpy.getAllModelsByBrand(Long.valueOf("Id"));
     }
 
     @Test(expected = BusinessException.class)

@@ -28,8 +28,8 @@ public class ModelService {
         return modelDtoList;
     }
 
-    public List<ModelDto> getAllModelsByBrand(String brand) {
-        List<ModelDto> modelDtoList = modelRepository.findAllByBrand_BrandName(brand).stream().map(ModelDto::new)
+    public List<ModelDto> getAllModelsByBrand(Long id) {
+        List<ModelDto> modelDtoList = modelRepository.findAllByBrand_Id(id).stream().map(ModelDto::new)
                 .collect(Collectors.toList());
 
         if (modelDtoList.isEmpty()) {

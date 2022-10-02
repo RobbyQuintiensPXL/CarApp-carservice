@@ -26,8 +26,8 @@ public class ModelController {
     }
 
     @GetMapping("/{brand}")
-    public ResponseEntity<List<ModelDto>> getAllModelsByBrand(@PathVariable("brand") String brand) {
-        return ResponseEntity.ok(modelService.getAllModelsByBrand(brand));
+    public ResponseEntity<List<ModelDto>> getAllModelsByBrandId(@PathVariable("brand") Long id) {
+        return ResponseEntity.ok(modelService.getAllModelsByBrand(id));
     }
 
     @GetMapping("/id/{id}")

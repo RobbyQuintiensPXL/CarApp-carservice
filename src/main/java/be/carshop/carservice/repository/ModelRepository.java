@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface ModelRepository extends JpaRepository<Model, Long> {
 
     List<Model> findAllByBrand_BrandName(String brand);
+    List<Model> findAllByBrand_Id(Long id);
 
     Optional<Model> findByModelName(String model);
 
