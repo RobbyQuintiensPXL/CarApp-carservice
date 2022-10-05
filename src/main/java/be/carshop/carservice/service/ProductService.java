@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,7 +69,6 @@ public class ProductService {
         return new PageImpl<>(productDtoList, paging, productDtoList.size());
     }
 
-    // MultipartFile[] images
     public void createProduct(CreateProduct createProduct, MultipartFile[] files) throws FileUploadException {
         Brand brand = brandRepository.findByBrandName(createProduct.getBrand()).orElseThrow(() ->
                 new BusinessException("Brand not found"));
@@ -99,5 +99,13 @@ public class ProductService {
         product.setImages(fileNames);
 
         productRepository.save(product);
+    }
+
+    public ProductDto getProductById(Long id) {
+        Optional<ProductDto> foundProduct = productRepository.findById(id).map(ProductDto::new);
+        if (foundProduct.isEmpty()) {
+            throw new BusinessException("No product found");
+        }
+        return foundProduct.get();
     }
 }

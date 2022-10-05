@@ -36,6 +36,11 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAllProductsByQuery(predicate, page, size));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(productService.getProductById(id));
+    }
+
     @PostMapping("/add")
     public ResponseEntity<Void> createProduct(@RequestPart CreateProduct createProduct,
                                               @RequestPart("files") MultipartFile[] files) throws FileUploadException {
